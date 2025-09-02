@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+    <title>RESULTAT </title>
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='creePlaylist.html';">Cree une nouvelle Playlist</button>
+        <button onclick="location.href='/';" >Accueil</button>
+        <button onclick="location.href='{{ url_for('musique')}}'" >Ma bibliothèque</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'" >Recherche</button>
+        <button onclick="location.href='{{ url_for('utili')}}'" >Page des utilisateurs</button>
+        {% if session.get('user_id') %}
+            <button onclick= "location.href= '{{ url_for('profil', idU=session['user_id']) }}'" >Votre profil</button>
+            <button onclick="location.href='{{ url_for('suggestion')}}'"  >Suggestion</button>
+            <button onclick="location.href='logout';" >Se déconnecter</button>
+        {% else %}
+            <button onclick="location.href='connexion';" >Connexion</button>
+            <button onclick="location.href='inscription';" >Inscription</button>
+        {% endif %}  
+        <button id="toggle-theme" >Changer le thème</button>
+    </div>
+<div class="main-container">
+    <div class="left-container">
+    <h1>Modifier la Playlist: {{ playlist.titre }}</h1>
+
+    <form method="POST">
+        <label for="titre">Titre:</label>
+        <input type="text" id="titre" name="titre" value="{{ playlist[0] }}" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description">{{ playlist.description }}</textarea>
+
+        <label for="prive">Privé:</label>
+        <input type="checkbox" id="prive" name="prive" {% if playlist[2] %}checked{% endif %}>
+
+        <h2>Ajouter/Supprimer des Musiques</h2>
+        <div>
+            {% for musique in musiques %}
+                <input type="checkbox" id="{{ musique.idM }}" name="musiques" value="{{ musique.idm }}"
+                    {% if musique in playlist_musiques %}checked{% endif %}>
+                <label for="{{ musique.idM }}">{{ musique.titre }}</label><br>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Enregistrer</button>
+        <button type="button" onclick="window.location.href='{{ url_for('profil', idU=session.get('user_id')) }}';">Annuler</button>
+    </form>
+</body>
+</html>

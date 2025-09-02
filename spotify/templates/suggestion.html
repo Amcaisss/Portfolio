@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+    <title>suggestion</title>
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='/';" >Accueil</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'" >Recherche</button>
+        <button onclick="location.href='{{ url_for('musique')}}'"  >Ma bibliothèque</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'" >Recherche</button>
+        <button onclick="location.href='{{ url_for('utili')}}'" >Page des utilisateurs</button>
+        {% if session.get('user_id') %}
+        <button onclick= "location.href= '{{ url_for('profil', idU=session['user_id']) }}'">Votre profil</button>
+        <button onclick="location.href='logout';" >Se déconnecter</button>
+        {% else %}
+            <button onclick="location.href='connexion';" >Connexion</button>
+            <button onclick="location.href='inscription';" >Inscription</button>
+        {% endif %}  
+        <button id="toggle-theme" >Changer le thème</button>
+
+    </div> 
+    <div class="main-container">
+        <div class="left-container">
+            <h1>SUGGESTION</h1>
+            <h3>Ecoutez plus d'album de vos groupe préféré :</h3>
+                {% for nvA in nvA%}
+                <button onclick="location.href='{{ url_for('album', ida=nvA.ida) }}'" class="action-button">
+                    {{ nvA.titre }} 
+                </button>
+                {% endfor %}
+            <h3>Ecoutez plus de musique dans des album deja ecouté :</h3>
+                {% for nvM in nvM%}
+                <button onclick="location.href='{{ url_for('musique_info', idM=nvM.idm) }}'" class="action-button">
+                    {{ nvM.titre }} 
+                </button>
+                {% endfor %}
+
+            <h3>Ecoutez plus de musique de vos artiste préféré :</h3>
+                {% for m in musique%}
+                <button onclick="location.href='{{ url_for('musique_info', idM=m.idm) }}'" class="action-button">
+                    {{ m.titre }} 
+                </button>
+                {% endfor %}
+
+            <h3>Ecoutez plus de playlist en rapport avec vos gout :</h3>
+                {% for p in play%}
+                <button onclick="location.href='{{ url_for('playlist', idp=p.idp) }}'" class="action-button">
+                    {{ p.titre }} 
+                </button>
+                {% endfor %}
+            {%if grp%}
+            <h3>Suivez plus de groupe en rapport avec vos abonnées :</h3>
+                {% for g in grp%}
+                <button onclick="location.href='{{ url_for('groupe', idg=g.idg) }}'" class="action-button">
+                    {{ g.nom }} 
+                </button>
+                {% endfor %}
+            {%endif%}
+    </div></div>
+    <script>
+    
+        const toggleThemeButton = document.getElementById('toggle-theme');
+        let isDarkMode = true;
+    
+        toggleThemeButton.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            isDarkMode = !isDarkMode;
+            toggleThemeButton.textContent = isDarkMode ? 'Changer le thème' : 'Revenir au thème sombre';
+        });
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+    <title>{{ playlist.titre }} </title>
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='/';" >Accueil</button>
+        <button onclick="location.href='{{ url_for('musique')}}'" >Ma bibliothèque</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'" >Recherche</button>
+        <button onclick="location.href='{{ url_for('utili')}}'"  >Page des utilisateurs</button>
+        {% if session.get('user_id') %}
+            <button onclick= "location.href= '{{ url_for('profil', idU=session['user_id']) }}'">Votre profil</button>
+            <button onclick="location.href='{{ url_for('suggestion')}}'" >Suggestion</button>
+            <button onclick="location.href='logout';" >Se déconnecter</button>
+        {% else %}
+            <button onclick="location.href='connexion';" >Connexion</button>
+            <button onclick="location.href='inscription';" >Inscription</button>
+        {% endif %}  
+        <button id="toggle-theme" >Changer le thème</button>
+    </div>
+    <div class="main-container">
+        <div class="left-container">
+        <h1>{{ playlist.titre }}</h1>
+        <p>Description : {{ playlist.description }}</p>
+        <p>{% if playlist.prive %} (Privée) {% else %} (Publique) {% endif %}</p>
+        
+        <button onclick="location.href='{{ url_for('ecouter_playlist', idp=playlist.idp) }}'" class="action-button">
+            Écouter la playlist
+        </button>
+    
+        {% if musiques %}
+            {% for musique in musiques %}
+                <button onclick="location.href='{{ url_for('musique_info', idM=musique.idm) }}'" class="action-button">
+                    {{musique.titre}} ({{musique.duree}})
+                </button>
+            {% endfor %}
+        {% endif %}
+    </div></div>
+    
+    <script>
+        const toggleThemeButton = document.getElementById('toggle-theme');
+        let isDarkMode = true;
+    
+        toggleThemeButton.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            isDarkMode = !isDarkMode;
+            toggleThemeButton.textContent = isDarkMode ? 'Changer le thème' : 'Revenir au thème sombre';
+        });
+    
+    </script>
+</body>
+</html>

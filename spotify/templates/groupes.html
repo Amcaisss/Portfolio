@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+    <title>{{ groupe.nom }}</title>
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='/';">Accueil</button>
+        <button onclick="location.href='{{ url_for('musique')}}'"  >Ma bibliothèque</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'" >Recherche</button>
+        <button onclick="location.href='{{ url_for('utili')}}'" >Page des utilisateurs</button>
+        {% if session.get('user_id') %}
+        <button onclick= "location.href= '{{ url_for('profil', idU=session['user_id']) }}'" >Votre profil</button>
+        <button onclick="location.href='{{ url_for('suggestion')}}'"  >Suggestion</button>
+        <button onclick="location.href='logout';">Se déconnecter</button>
+        {% else %}
+            <button onclick="location.href='connexion';" >Connexion</button>
+            <button onclick="location.href='inscription';" >Inscription</button>
+        {% endif %}  
+        <button id="toggle-theme" >Changer le thème</button>
+    </div> 
+    <div class="main-container">
+        <div class="left-container">
+        <h1>{{ groupe.nom}}</h1>
+        <p> Nationalité: {{ groupe.nationalite }}</p>
+        <p>Genre : {{groupe.genre}}</p>
+    
+    
+        {%if artistes%}
+            <h2>Artistes : </h2>
+            {% for artiste in artistes %}
+                <button onclick="location.href='{{ url_for('artiste', id=artiste.id) }}'" class="action-button">
+                    {{ artiste.nom }}
+                </button>
+                    <li>Arrivé : {{ artiste.arriver }}</li> 
+                    {% if artiste.depart %}
+                        <li>Départ : {{ artiste.depart }}</li> 
+                    {% endif %}
+                    <li>Rôle : {{ artiste.role }}</li> 
+            {% endfor %}
+        {%endif%}
+            {%if artisteout%}
+                <h2>Artistes ayant fait partie du groupe: </h2>
+                {% for artiste in artisteout %}
+                    <button onclick="location.href='{{ url_for('artiste', id=artiste.id) }}'" class="action-button">
+                        {{ artiste.nom }}
+                    </button>
+                        <li>Arrivé : {{ artiste.arriver }}</li> 
+                        {% if artiste.depart %}
+                            <li>Départ : {{ artiste.depart }}</li> 
+                        {% endif %}
+                        <li>Rôle : {{ artiste.role }}</li> 
+                {% endfor %}
+            {%endif%}
+            <h2>Albums</h2>
+
+            {% for album in albums %}
+            <button onclick="location.href='{{ url_for('album', ida=album.ida) }}'" class="action-button">
+                {{ album.titre }}
+            </button>
+                
+                    <li> {{album.description}}</li>
+
+            {% endfor %}
+        <h3>Nombre de suivis : </h3>  
+            {{nb.nb_suivants}}  
+        
+            <form action="{{ url_for('suivreG', idg=groupe.idg) }}" method="POST" class="action-button">
+                <button type="submit">Suivre ce groupe</button>
+            </form>
+        </div></div>
+
+        
+
+        <script>
+            const toggleThemeButton = document.getElementById('toggle-theme');
+            let isDarkMode = true;
+    
+            toggleThemeButton.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                isDarkMode = !isDarkMode;
+                toggleThemeButton.textContent = isDarkMode ? 'Changer le thème' : 'Revenir au thème sombre';
+            });
+    
+        </script>
+</body>
+</html>
+

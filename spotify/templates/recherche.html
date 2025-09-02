@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+    <title>Recherche</title>
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='/';" >Accueil</button>
+        <button onclick="location.href='{{ url_for('musique')}}'" >Ma bibliothèque</button>
+        <button onclick="location.href='{{ url_for('utili')}}'"  >Page des utilisateurs</button>
+        {% if session.get('user_id') %}
+            <button onclick="location.href='{{ url_for('profil', idU=session['user_id']) }}'" >Votre profil</button>
+            <button onclick="location.href='{{ url_for('suggestion')}}'" >Suggestion</button>
+            <button onclick="location.href='logout';" >Se déconnecter</button>
+        {% else %}
+            <button onclick="location.href='connexion';" >Connexion</button>
+            <button onclick="location.href='inscription';" >Inscription</button>
+        {% endif %}  
+        <button id="toggle-theme">Changer le thème</button>
+    </div>
+
+    <div class="search-container">
+        <h1 class="title-center">Recherche Avancée</h1>
+        <form method="POST" action="{{ url_for('recherche') }}">
+            <label for="choix1"  class="action-button">Sélectionnez un type :</label>
+            <select id="choix1" name="choix1" onchange="this.form.submit()">
+                <option value="" disabled {% if not choix1 %}selected{% endif %}>-- Choisissez --</option>
+                <option value="musique" {% if choix1 == 'musique' %}selected{% endif %}>Musique</option>
+                <option value="groupe" {% if choix1 == 'groupe' %}selected{% endif %}>Groupe</option>
+                <option value="album" {% if choix1 == 'album' %}selected{% endif %}>Album</option>
+                <option value="utilisateur" {% if choix1 == 'utilisateur' %}selected{% endif %}>Utilisateur</option>
+                <option value="artiste" {% if choix1 == 'artiste' %}selected{% endif %}>Artiste</option>
+                <option value="playlist" {% if choix1 == 'playlist' %}selected{% endif %}>Playlist</option>
+            </select>
+    
+            {% if choix1 %}
+                <label for="choix2" class="action-button">Sélectionnez un(e) {{ choix1 }} :</label>
+                <select id="choix2" name="choix2">
+                    <option value="" disabled selected>-- Choisissez --</option>
+                    {% for option in options %}
+                        <option value="{{ option[0] }}">{{ option[1] }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+    
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+    
+    <script>
+        const toggleThemeButton = document.getElementById('toggle-theme');
+        let isDarkMode = true;
+
+        toggleThemeButton.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            isDarkMode = !isDarkMode;
+            toggleThemeButton.textContent = isDarkMode ? 'Changer le thème' : 'Revenir au thème sombre';
+        });
+
+    </script>
+</body>
+</html>

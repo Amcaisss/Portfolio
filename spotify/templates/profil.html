@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil de {{ utilisateur.nom}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='/';" >Accueil</button>
+        <button onclick="location.href='{{ url_for('cree_playlist')}}'" >Cree une nouvelle Playlist</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'">Recherche</button>
+        <button onclick="location.href='{{ url_for('musique')}}'"  >Ma bibliothèque</button>
+        <button onclick="location.href='{{ url_for('utili')}}'"  >Page des utilisateurs</button>
+        <button onclick="location.href='{{ url_for('suggestion')}}'" >Suggestion</button>
+        <button onclick="location.href='{{ url_for('logout')}}'" >Se déconnecter</button>
+        <button id="toggle-theme" >Changer le thème</button>
+    </div>
+    
+    <div class="main-container">
+        <div class="left-container">
+            <h1>Bienvenue, {{ utilisateur.pseudo }} !</h1>
+            <p>Email : {{ utilisateur.mail }}</p>
+            <p>Date d'arrivée : {{ utilisateur[3] }}</p>
+
+            <h2>Mes Playlists : </h2>
+            {%if playlists%}
+                {% for playlist in playlists%}
+                    <button onclick="location.href='{{ url_for('playlist', idp=playlist.idp ) }}'" class="action-button">
+                        {{ playlist.titre }} - {{ playlist.description}} -{% if playlist.prive %} (Privée) {% else %} (Publique) {% endif %}
+                    </button>
+                    <ul><button onclick="location.href='{{ url_for('edit_playlist', idp=playlist.idp) }}'" class="action-button">Modifier</button></ul>
+                {% endfor %}
+        {% else %}
+            <p>Aucun playlist.</p>
+        {% endif %}
+        <h3>Vors musiques preferées : </h3>
+            {%if ecoute%}
+                {% for ecoute in ecoute%}
+                    <button onclick="location.href='{{ url_for('musique_info', idM=ecoute.idm ) }}'" class="action-button">
+                        {{ ecoute.titre }} 
+                    </button>
+                {% endfor %}
+            {% endif %}
+       </div>
+        <div class="right-container">
+            <h3>Historique :</h3>
+            {% for dernierE in dernierE%}
+            <button onclick="location.href='{{ url_for('musique_info', idM=dernierE.idm) }}'" class="action-button">
+                {{ dernierE.titre }} 
+            </button>
+            {% endfor %}
+
+            <h3>Dernière actualité de(s) Groupes (Les albums): </h3>
+            {% for actual in actualG%}
+            <button onclick="location.href='{{ url_for('album', ida=actual.ida) }}'" class="action-button">
+                {{ actual.titre }} de {{actual.nom}}
+            </button>
+            {% endfor %}
+
+        
+            <h3>Dernière actualité de(s) Utilisateur(s): </h3>
+            {% for actual in actualP%}
+            <button onclick="location.href='{{ url_for('playlist', idp=actual.idp) }}'" class="action-button">
+                {{ actual.titre }} de {{actual.pseudo}}
+            </button>
+            {% endfor %}
+        </div>
+</div>
+
+    <script>
+        const toggleThemeButton = document.getElementById('toggle-theme');
+        let isDarkMode = true;
+
+        toggleThemeButton.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            isDarkMode = !isDarkMode;
+            toggleThemeButton.textContent = isDarkMode ? 'Changer le thème' : 'Revenir au thème sombre';
+        });
+
+    </script>
+</body>
+</html>

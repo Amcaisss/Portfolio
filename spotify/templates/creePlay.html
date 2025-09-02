@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+    <title>Cree playlist</title>
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='/';" >Accueil</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'" >Recherche</button>
+        <button onclick="location.href='{{ url_for('utili')}}'" >Page des utilisateurs</button>
+        {% if session.get('user_id') %}
+        <button onclick= "location.href= '{{ url_for('profil', idU=session['user_id']) }}'" >Votre profil</button>
+        <button onclick="location.href='{{ url_for('suggestion')}}'" >Suggestion</button>
+        <button onclick="location.href='logout';" >Se déconnecter</button>
+        {% else %}
+            <button onclick="location.href='connexion';" >Connexion</button>
+            <button onclick="location.href='inscription';">Inscription</button>
+        {% endif %}
+        <button id="toggle-theme" >Changer le thème</button>
+    </div> 
+    <div class="main-container">
+        <div class="left-container">
+        <h1>Créer une Playlist</h1>
+        <form method="post">
+            <label for="titre">Titre :</label>
+            <input type="text" id="titre" name="titre" required>
+            <br>
+    
+            <label for="description">Description :</label>
+            <textarea id="description" name="description"></textarea>
+            <br>
+    
+            <label for="prive">Playlist Privée :</label>
+            <input type="checkbox" id="prive" name="prive">
+            <br>
+    
+            <h2>Ajouter des Musiques</h2>
+            <ul>
+                {% for musique in musiques %}
+                    <li>
+                        <input type="checkbox" id="{{ musique.idm }}" name="musiques" value="{{ musique.idm }}">
+                        <label for="{{ musique.idm }}">{{ musique.titre }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
+    
+            <button type="submit">Créer</button>
+        </form>
+    </body>
+    </html>

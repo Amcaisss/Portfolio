@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='musique.css') }}">
+    <title>Musiques</title>
+</head>
+<body>
+    <div class="bar">
+        <button onclick="location.href='/';" >Accueil</button>
+        <button onclick="location.href='{{ url_for('recherche')}}'" >Recherche</button>
+        <button onclick="location.href='{{ url_for('utili')}}'" >Page des utilisateurs</button>
+        {% if session.get('user_id') %}
+        <button onclick= "location.href= '{{ url_for('profil', idU=session['user_id']) }}'" >Votre profil</button>
+        <button onclick="location.href='{{ url_for('suggestion')}}'"  >Suggestion</button>
+        <button onclick="location.href='logout';" >Se déconnecter</button>
+        {% else %}
+            <button onclick="location.href='connexion';" >Connexion</button>
+            <button onclick="location.href='inscription';">Inscription</button>
+        {% endif %}
+        <button id="toggle-theme" >Changer le thème</button>
+    </div> 
+    <div class="main-container">
+        <div class="left-container">
+        <div class="container">
+            <h1>Musiques </h1>
+            {% if musiques %}
+                {% for musique in musiques%}
+                    <button onclick="location.href='{{ url_for('musique_info', idM=musique.idm) }}'" class="action-button">
+                        {{ musique.titre }} 
+                    </button>
+                {% endfor %}
+            {% else %}
+                <p>Aucune musique.</p>
+            {% endif %}
+        </div>
+        <div class="container2">
+            {% if ecouteM %}
+            <h2> Les musiques les plus ecoutées : </h2>
+                    {% for ecoute in ecouteM%}
+                    <button onclick="location.href='{{ url_for('musique_info', idM=ecoute.idm ) }}'" class="action-button">
+                        {{ ecoute.titre }} 
+                    </button>
+                    {% endfor %}
+            {% else %}
+                <p>Aucune ecoute.</p>
+            {% endif %}
+            {% if connu %}
+            <h2> Les groupes les plus suivis : </h2>
+                    {% for connu in connu%}
+                    <button onclick="location.href='{{ url_for('groupe', idg=connu.idg ) }}'" class="action-button">
+                        {{ connu.nom }} 
+                    </button>
+                    {% endfor %}
+            {% else %}
+                <p>Aucune groupe suivis.</p>
+            {% endif %}
+            {% if nv %}
+            <h2> Les dernier albums : </h2>
+                <ul>
+                    {% for nv in nv%}
+                    <button onclick="location.href='{{ url_for('album', ida=nv.ida ) }}'"class="action-button">
+                        {{ nv.titre }} 
+                    </button>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun dernier album.</p>
+            {% endif %}
+        </div></div>
+    <div class="right-container">
+                {% if groupes %}
+                    <h2>Groupes :</h2>
+                        {% for groupe in groupes%}
+                        <button onclick="location.href='{{ url_for('groupe', idg=groupe.idg ) }}'" class="action-button">
+                            {{ groupe.nom }} 
+                        </button>
+                        {% endfor %}
+                {% else %}
+                    <p>Aucun groupe.</p>
+                {% endif %}
+          </div>
+    </div>
+        <script>
+            const toggleThemeButton = document.getElementById('toggle-theme');
+            let isDarkMode = true;
+        
+            toggleThemeButton.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                isDarkMode = !isDarkMode;
+                toggleThemeButton.textContent = isDarkMode ? 'Changer le thème' : 'Revenir au thème sombre';
+            });
+        
+        </script>
+</body>
+</html>
+
