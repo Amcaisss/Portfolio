@@ -1,0 +1,82 @@
+// Pokémon sauvages pouvant apparaître en combat (gen 1, 2, 3 mélangés)
+export const WILD_POKEMON = [
+  { id: 16,  name: "Roucool",    hp: 40,  atk: 45,  type: "vol",     rarity: "commun" },
+  { id: 19,  name: "Rattata",    hp: 30,  atk: 56,  type: "normal",  rarity: "commun" },
+  { id: 25,  name: "Pikachu",    hp: 35,  atk: 55,  type: "électrik",rarity: "rare" },
+  { id: 35,  name: "Mélofée",    hp: 70,  atk: 45,  type: "fée",     rarity: "commun" },
+  { id: 39,  name: "Rondoudou",  hp: 115, atk: 45,  type: "normal",  rarity: "commun" },
+  { id: 52,  name: "Miaouss",    hp: 40,  atk: 45,  type: "normal",  rarity: "commun" },
+  { id: 54,  name: "Psykokwak",  hp: 50,  atk: 52,  type: "eau",     rarity: "peu commun" },
+  { id: 63,  name: "Abra",       hp: 25,  atk: 20,  type: "psy",     rarity: "rare" },
+  { id: 74,  name: "Racaillou",  hp: 40,  atk: 80,  type: "roche",   rarity: "commun" },
+  { id: 92,  name: "Fantominus", hp: 30,  atk: 35,  type: "spectre", rarity: "peu commun" },
+  { id: 129, name: "Magicarpe",  hp: 20,  atk: 10,  type: "eau",     rarity: "commun" },
+  { id: 133, name: "Évoli",      hp: 55,  atk: 55,  type: "normal",  rarity: "rare" },
+  { id: 152, name: "Germignon",  hp: 45,  atk: 49,  type: "plante",  rarity: "peu commun" },
+  { id: 155, name: "Héricendre", hp: 45,  atk: 60,  type: "feu",     rarity: "peu commun" },
+  { id: 158, name: "Kaiminus",   hp: 45,  atk: 65,  type: "eau",     rarity: "peu commun" },
+  { id: 175, name: "Togepi",     hp: 35,  atk: 20,  type: "fée",     rarity: "rare" },
+  { id: 177, name: "Natu",       hp: 40,  atk: 50,  type: "psy",     rarity: "peu commun" },
+  { id: 183, name: "Marill",     hp: 70,  atk: 20,  type: "eau",     rarity: "commun" },
+  { id: 252, name: "Arcko",      hp: 40,  atk: 45,  type: "plante",  rarity: "peu commun" },
+  { id: 255, name: "Poussifeu",  hp: 45,  atk: 60,  type: "feu",     rarity: "peu commun" },
+  { id: 258, name: "Gobou",      hp: 50,  atk: 70,  type: "eau",     rarity: "peu commun" },
+  { id: 280, name: "Tarsal",     hp: 28,  atk: 25,  type: "psy",     rarity: "rare" },
+  { id: 300, name: "Skitty",     hp: 50,  atk: 45,  type: "normal",  rarity: "commun" },
+  { id: 311, name: "Posipi",     hp: 60,  atk: 50,  type: "électrik",rarity: "peu commun" },
+  { id: 312, name: "Négapi",     hp: 60,  atk: 50,  type: "électrik",rarity: "peu commun" },
+  { id: 333, name: "Tylton",     hp: 45,  atk: 40,  type: "vol",     rarity: "commun" },
+];
+
+export const TYPE_COLORS = {
+  feu:      "#e74c3c",
+  eau:      "#3498db",
+  plante:   "#27ae60",
+  électrik: "#f1c40f",
+  psy:      "#9b59b6",
+  roche:    "#95a5a6",
+  vol:      "#74b9ff",
+  normal:   "#b2bec3",
+  spectre:  "#6c5ce7",
+  fée:      "#fd79a8",
+};
+
+export const ITEMS = [
+  { id: "pokeball",   name: "Poké Ball",   icon: "🔴", catchRate: 1,   rarity: "commun",     description: "La Poké Ball de base." },
+  { id: "superball",  name: "Super Ball",  icon: "🔵", catchRate: 1.5, rarity: "peu commun", description: "Plus efficace qu'une Poké Ball." },
+  { id: "hyperball",  name: "Hyper Ball",  icon: "🟡", catchRate: 2,   rarity: "rare",       description: "Très haute probabilité de capture." },
+  { id: "masterball", name: "Master Ball", icon: "🟣", catchRate: 999, rarity: "légendaire", description: "Capture à coup sûr." },
+  { id: "potion",     name: "Potion",      icon: "💊", heal: 20,       rarity: "commun",     description: "Restaure 20 PV en combat." },
+  { id: "superpotion",name: "Super Potion",icon: "💉", heal: 50,       rarity: "peu commun", description: "Restaure 50 PV en combat." },
+  { id: "rappel",     name: "Rappel",      icon: "✨", type: "rappel", rarity: "peu commun", description: "Soigne un Pokémon K.O." },
+  { id: "antidote",   name: "Antidote",    icon: "🌿", type: "status", rarity: "commun",     description: "Guérit les altérations de statut." },
+];
+
+export const DAILY_QUESTS = [
+  "Manger 3 fruits ou légumes aujourd'hui",
+  "Faire 20 minutes d'exercice",
+  "Ranger sa chambre",
+  "Faire une machine à laver",
+  "Boire 1,5L d'eau",
+  "Lire 20 minutes",
+  "Faire son lit dès le réveil",
+  "Pas d'écran après 22h",
+  "Cuisiner un repas maison",
+  "Appeler un proche",
+  "Faire 10 minutes de méditation",
+  "Préparer ses affaires pour le lendemain",
+  "Faire la vaisselle",
+  "Sortir marcher 15 minutes",
+  "Apprendre quelque chose de nouveau",
+];
+
+export const MOVES = [
+  { name: "Charge",       power: 40, type: "normal" },
+  { name: "Éclair",       power: 40, type: "électrik" },
+  { name: "Flammèche",    power: 40, type: "feu" },
+  { name: "Pistolet à O", power: 40, type: "eau" },
+  { name: "Jackpot",      power: 40, type: "normal" },
+  { name: "Griffe",       power: 40, type: "normal" },
+  { name: "Rugissement",  power: 0,  type: "normal" },
+  { name: "Tranche",      power: 70, type: "normal" },
+];
